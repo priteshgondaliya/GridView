@@ -1,0 +1,49 @@
+ASPX
+  <asp:GridView ID="gvUsers" runat="server" AutoGenerateColumns="False" 
+            DataKeyNames="UserID" OnRowDataBound="gvUsers_RowDataBound" 
+            RowStyle-CssClass="Row" onrowcommand="gvUsers_RowCommand">
+                    <Columns>                       
+                        <asp:BoundField DataField="FirstName" HeaderText="First Name" ReadOnly="True" />
+                        <asp:BoundField DataField="LastName" HeaderText="Last Name" ReadOnly="True" />      
+                         <asp:BoundField DataField="Email" HeaderText="Email" ReadOnly="True" />  
+                         <asp:TemplateField>
+                         <ItemTemplate>
+                        <asp:Button runat="server" Text="SELECT" CommandName="Select" />                              
+                        </ItemTemplate>
+                         </asp:TemplateField>                        
+                    </Columns>                    
+                    <HeaderStyle BackColor="#F06300" Font-Bold="True" ForeColor="#FFFFCC" />
+     </asp:GridView>
+
+ 
+
+RowDataBound Event
+protected void gvUsers_RowDataBound(object sender, GridViewRowEventArgs e)
+    {        
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            object objTemp = gvUsers.DataKeys[e.Row.RowIndex].Value as object;
+            if (objTemp != null)
+            {
+                string id = objTemp.ToString();
+ //Do your operations
+            }
+           
+        }
+    }
+
+ 
+
+RowCommand Event
+    protected void gvUsers_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+      Control ctl = e.CommandSource as Control;
+      GridViewRow CurrentRow = ctl.NamingContainer as GridViewRow;
+      object objTemp = gvUsers.DataKeys[CurrentRow.RowIndex].Value as object;
+      if (objTemp != null)
+      {
+          string id = objTemp.ToString();
+ //Do your operations
+      }
+    }
+
